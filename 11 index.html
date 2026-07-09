@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bright Future Agency — eBay Account Management</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14171C;
+    --paper:#F7F7F5;
+    --paper-2:#F0F0EC;
+    --slate:#6B7079;
+    --slate-light:#9A9EA5;
+    --green:#2F7A4D;
+    --green-light:#E7F1EA;
+    --line:#E3E3DF;
+    --white:#FFFFFF;
+    --radius:14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%; display:block;}
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:1160px; margin:0 auto; padding:0 32px;}
+  h1,h2,h3{font-family:'Space Grotesk', sans-serif; letter-spacing:-0.02em;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--green);
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:14px;
+  }
+  .eyebrow::before{content:''; width:16px; height:1px; background:var(--green);}
+
+  /* ---------- Nav ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(247,247,245,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 0;
+  }
+  .logo{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:19px;
+    letter-spacing:-0.01em;
+    display:flex; align-items:center; gap:10px;
+  }
+  .logo-mark{
+    width:30px; height:30px; border-radius:8px;
+    background:var(--ink);
+    color:var(--paper);
+    display:flex; align-items:center; justify-content:center;
+    font-size:13px; font-weight:700;
+  }
+  .nav-links{display:flex; gap:36px; font-size:14px; font-weight:500;}
+  .nav-links a{color:var(--slate); transition:color .2s;}
+  .nav-links a:hover{color:var(--ink);}
+  .nav-cta{
+    background:var(--ink); color:var(--paper);
+    padding:10px 18px; border-radius:100px;
+    font-size:13.5px; font-weight:600;
+    transition:transform .2s, background .2s;
+  }
+  .nav-cta:hover{background:var(--green);}
+  .mobile-toggle{display:none;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:96px 0 64px;
+    display:grid;
+    grid-template-columns:1.15fr 0.85fr;
+    gap:56px;
+    align-items:center;
+  }
+  .hero h1{
+    font-size:56px;
+    line-height:1.04;
+    font-weight:600;
+    margin-bottom:22px;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--green);
+  }
+  .hero p.lead{
+    font-size:17px;
+    color:var(--slate);
+    max-width:520px;
+    margin-bottom:32px;
+  }
+  .hero-ctas{display:flex; gap:14px; margin-bottom:44px;}
+  .btn-primary{
+    background:var(--green); color:var(--white);
+    padding:14px 26px; border-radius:100px;
+    font-size:14.5px; font-weight:600;
+    display:inline-flex; align-items:center; gap:8px;
+    transition:transform .2s, box-shadow .2s;
+    box-shadow:0 1px 0 rgba(0,0,0,0.04);
+  }
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 10px 24px -8px rgba(47,122,77,0.5);}
+  .btn-secondary{
+    border:1px solid var(--line); background:var(--white);
+    padding:14px 26px; border-radius:100px;
+    font-size:14.5px; font-weight:600;
+    transition:border-color .2s;
+  }
+  .btn-secondary:hover{border-color:var(--ink);}
+  .hero-stats{
+    display:flex; gap:36px;
+    padding-top:28px; border-top:1px solid var(--line);
+  }
+  .hero-stats .stat-num{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:28px; font-weight:700;
+  }
+  .hero-stats .stat-label{
+    font-size:12.5px; color:var(--slate); margin-top:4px;
+  }
+
+  .hero-panel{
+    position:relative;
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:22px;
+    box-shadow:0 30px 60px -30px rgba(20,23,28,0.18);
+  }
+  .hero-panel-head{
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:16px;
+  }
+  .hero-panel-head .dot-status{
+    display:flex; align-items:center; gap:6px;
+    font-size:12px; color:var(--green); font-weight:600;
+  }
+  .hero-panel-head .dot-status::before{
+    content:''; width:7px; height:7px; border-radius:50%; background:var(--green);
+    box-shadow:0 0 0 4px var(--green-light);
+  }
+  .hero-panel img{border-radius:10px; border:1px solid var(--line); width:100%;}
+  .hero-panel-caption{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px; color:var(--slate);
+    margin-top:14px;
+  }
+
+  /* ---------- Section shell ---------- */
+  section{padding:88px 0;}
+  .section-head{
+    max-width:640px; margin-bottom:52px;
+  }
+  .section-head h2{
+    font-size:34px; font-weight:600; margin-bottom:14px;
+  }
+  .section-head p{color:var(--slate); font-size:15.5px;}
+
+  /* ---------- Proof grid ---------- */
+  .proof{background:var(--white); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .proof-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:18px;
+    margin-bottom: 40px;
+  }
+  .proof-card{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:12px;
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .proof-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 20px 34px -22px rgba(20,23,28,0.25);
+  }
+  .proof-card img{border-radius:8px; width:100%; height:auto;}
+  .proof-note{
+    margin-top:28px; text-align:center;
+    color:var(--slate); font-size:13px;
+  }
+
+  /* ---------- Side-by-Side Carousel Layout (Strict Top Alignment) ---------- */
+  .carousel-split-layout {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 48px;
+    align-items: flex-start !important; /* Force items to start exactly at the top line */
+    margin: 50px auto 20px;
+  }
+  .carousel-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--line);
+    background: #fff;
+    margin: 0;
+  }
+  .carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
+  }
+  .carousel-slide {
+    min-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+  }
+  .carousel-slide img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+    object-fit: contain;
+  }
+  .nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(20, 23, 28, 0.6);
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    cursor: pointer;
+    border-radius: 50%;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    z-index: 10;
+  }
+  .nav-btn:hover {
+    background-color: rgba(20, 23, 28, 0.9);
+  }
+  .prev { left: 15px; }
+  .next { right: 15px; }
+  .carousel-dots {
+    text-align: center;
+    padding: 15px 0;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+  }
+  .dot {
+    cursor: pointer;
+    height: 8px;
+    width: 8px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+  }
+  .active, .dot:hover {
+    background-color: #333;
+  }
+  
+  /* Carousel Side Text Styles (Strict Left & Top Aligned) */
+  .carousel-text-side {
+    text-align: left !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: block !important;
+  }
+  .carousel-text-side h3 {
+    font-size: 34px;
+    font-weight: 600;
+    margin: 0 0 16px 0 !important; /* Reset all margin fields except bottom spacing */
+    padding: 0 !important;
+    color: var(--ink);
+    line-height: 1.2;
+    text-align: left !important;
+  }
+  .carousel-text-side p {
+    font-size: 15.5px;
+    color: var(--slate);
+    line-height: 1.6;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: left !important;
+  }
+
+  /* ---------- Services ---------- */
+  .services-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:16px;
+    overflow:hidden;
+  }
+  .service-cell{
+    background:var(--paper);
+    padding:30px 26px;
+  }
+  .service-num{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px; color:var(--green); margin-bottom:14px;
+  }
+  .service-cell h3{font-size:17px; font-weight:600; margin-bottom:8px;}
+  .service-cell p{font-size:13.5px; color:var(--slate);}
+
+  /* ---------- Models ---------- */
+  .models{background:var(--white); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .models-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:24px;
+  }
+  .model-card{
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:32px;
+    background:var(--paper);
+  }
+  .model-card.accent{
+    background:var(--ink);
+    color:var(--paper);
+    border-color:var(--ink);
+  }
+  .model-card .tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px; text-transform:uppercase; letter-spacing:0.1em;
+    color:var(--green);
+    margin-bottom:14px; display:block;
+  }
+  .model-card.accent .tag{color:#7FD9A1;}
+  .model-card h3{font-size:22px; margin-bottom:12px;}
+  .model-card p{font-size:14.5px; color:var(--slate); margin-bottom:18px;}
+  .model-card.accent p{color:#B9BEC6;}
+  .supplier-list{display:flex; flex-wrap:wrap; gap:8px;}
+  .supplier-chip{
+    font-size:12.5px; font-weight:600;
+    padding:7px 14px; border-radius:100px;
+    background:var(--white); border:1px solid var(--line);
+  }
+  .model-card.accent .supplier-chip{
+    background:rgba(255,255,255,0.06); border-color:rgba(255,255,255,0.14); color:var(--paper);
+  }
+
+  /* ---------- Highlights ---------- */
+  .highlights-grid{
+    display:grid; grid-template-columns:repeat(2, 1fr); gap:16px 40px;
+  }
+  .highlight-item{
+    display:flex; align-items:flex-start; gap:14px;
+    padding:18px 0; border-bottom:1px solid var(--line);
+  }
+  .check{
+    flex-shrink:0; width:24px; height:24px; border-radius:50%;
+    background:var(--green-light); color:var(--green);
+    display:flex; align-items:center; justify-content:center;
+    font-size:13px; font-weight:700; margin-top:2px;
+  }
+  .highlight-item p{font-size:14.5px;}
+  .highlight-item strong{font-weight:600;}
+
+  /* ---------- Contact / Social ---------- */
+  .contact{
+    background:var(--ink); color:var(--paper);
+    border-radius:24px;
+    padding:64px;
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:48px;
+    align-items:center;
+  }
+  .contact h2{font-size:32px; margin-bottom:14px;}
+  .contact p{color:#B9BEC6; font-size:15px; margin-bottom:26px; max-width:440px;}
+  .whatsapp-btn{
+    background:#25D366; color:#08300E;
+    padding:15px 28px; border-radius:100px;
+    font-weight:700; font-size:14.5px;
+    display:inline-flex; align-items:center; gap:10px;
+    transition:transform .2s;
+  }
+  .whatsapp-btn:hover{transform:translateY(-2px);}
+  .email-link{
+    display:inline-flex; align-items:center; gap:9px;
+    margin-left:14px;
+    font-size:14px; font-weight:600; color:var(--paper);
+    padding-bottom:2px; border-bottom:1px solid rgba(255,255,255,0.3);
+    transition:border-color .2s, color .2s;
+  }
+  .email-link:hover{border-color:var(--paper); color:#7FD9A1;}
+  @media (max-width:520px){
+    .email-link{margin-left:0; margin-top:14px;}
+  }
+  .social-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  }
+  .social-card{
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:14px;
+    padding:20px;
+    transition:background .2s, border-color .2s;
+  }
+  .social-card:hover{background:rgba(255,255,255,0.09); border-color:rgba(255,255,255,0.25);}
+  .social-card .s-icon{margin-bottom:16px; width:22px; height:22px;}
+  .social-card .s-name{font-weight:600; font-size:14.5px; margin-bottom:2px;}
+  .social-card .s-handle{font-size:12.5px; color:#9AA0A8;}
+
+  footer{padding:40px 0; text-align:center; color:var(--slate); font-size:13px;}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:860px){
+    .nav-links{display:none;}
+    .hero{grid-template-columns:1fr; padding-top:64px;}
+    .hero h1{font-size:38px;}
+    .hero-stats{flex-wrap:wrap; row-gap:20px;}
+    .proof-grid{grid-template-columns:repeat(2,1fr);}
+    .carousel-split-layout{grid-template-columns:1fr; gap:32px;}
+    .services-grid{grid-template-columns:1fr;}
+    .models-grid{grid-template-columns:1fr;}
+    .highlights-grid{grid-template-columns:1fr;}
+    .contact{grid-template-columns:1fr; padding:40px 26px; border-radius:18px;}
+    .social-grid{grid-template-columns:1fr 1fr;}
+    .wrap{padding:0 20px;}
+  }
+  @media (max-width:520px){
+    .proof-grid{grid-template-columns:1fr;}
+    .hero h1{font-size:32px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    * {transition:none !important; scroll-behavior:auto !important;}
+  }
+
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--green); outline-offset:3px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <div class="logo"><span class="logo-mark">BFA</span> Bright Future Agency</div>
+      <div class="nav-links">
+        <a href="#results">Results</a>
+        <a href="#services">Services</a>
+        <a href="#models">Business Models</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <a class="nav-cta" href="https://wa.me/923126887195" target="_blank" rel="noopener">Message us</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="hero">
+    <div>
+      <div class="eyebrow">eBay account management</div>
+      <h1>We run <em>Top‑Rated</em><br>eBay stores, end to end.</h1>
+      <p class="lead">Bright Future Agency manages 25+ active eBay seller accounts across the UK and Germany — from product sourcing to order fulfilment — so store owners can scale without touching the day‑to‑day.</p>
+      <div class="hero-ctas">
+        <a class="btn-primary" href="https://wa.me/923126887195" target="_blank" rel="noopener">
+          Chat on WhatsApp →
+        </a>
+        <a class="btn-secondary" href="#results">See account performance</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">25+</div>
+          <div class="stat-label">Accounts managed</div>
+        </div>
+        <div>
+          <div class="stat-num">0.00%</div>
+          <div class="stat-label">Transaction defect rate</div>
+        </div>
+        <div>
+          <div class="stat-num">2</div>
+          <div class="stat-label">Sourcing models</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-panel">
+      <div class="hero-panel-head">
+        <span class="mono" style="font-size:12px; color:var(--slate);">Seller level — Region: UK</span>
+        <span class="dot-status">Top‑rated</span>
+      </div>
+      <img src="5.jpeg" alt="eBay seller level dashboard showing Top-rated Seller status with a 0.24% late delivery rate">
+      <div class="hero-panel-caption">Live account snapshot — one of 25+ stores under management</div>
+    </div>
+  </section>
+</div>
+
+<section class="proof" id="results">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Account performance</div>
+      <h2>The proof is in the dashboards.</h2>
+      <p>A sample of real seller‑level and monthly‑limit screenshots pulled directly from accounts we manage across the UK and Germany.</p>
+    </div>
+    
+    <div class="proof-grid">
+      <div class="proof-card"><img src="1.jpeg" alt="eBay seller level: Top-rated Seller, 0.00% defect rate, 1.12% late delivery"></div>
+      <div class="proof-card"><img src="2.jpeg" alt="eBay monthly limits: 10 million more items, £49.9 million more available"></div>
+      <div class="proof-card"><img src="3.jpeg" alt="eBay monthly limits: 153,361 more items, £290,818 more available"></div>
+      <div class="proof-card"><img src="4.jpeg" alt="eBay service status Germany: Top rating, 0.14% defect rate"></div>
+      <div class="proof-card"><img src="5.jpeg" alt="eBay monthly limits: 71,072 more items, £514,343 more available"></div>
+      <div class="proof-card"><img src="6.jpeg" alt="eBay seller level: Top-rated Seller, 0.00% defect rate, 0.56% late delivery"></div>
+    </div>
+    <br>
+    
+    <!-- Side-by-Side Layout Section -->
+    <div class="carousel-split-layout">
+      
+
+
+      
+
+
+
+<!-- Left Side Content Block (Strictly Top-Left Aligned) -->
+      <div class="carousel-text-side">
+
+        <div class="eyebrow" style="color: green;" >Accounts Sales performance</div>
+
+        <h1> Sales Performance </h1>
+      
+
+
+
+        
+
+        <ul style="font-size: 125%;"> 
+
+  <li>Tracks total sales revenue through dynamic charts.</li>
+  <li>Displays 7-day, 31-day, and 90-day sales summaries.</li>
+  <li>Monitors sales growth with percentage-based comparisons.</li>
+  <li>Provides real-time insights into business performance.</li>
+  <li>Helps identify peak selling days and seasonal trends.</li>
+  <li>Supports inventory planning through sales analysis.</li>
+  <li>Enables data-driven business decision-making.</li>
+  <li>Interactive bar charts for easy performance monitoring.</li>
+  <li>Compares current sales with previous reporting periods.</li>
+  <li>Displays key business performance indicators (KPIs).</li>
+  <li>Displays 7-day, 31-day, and 90-day sales summaries.</li>
+  <li>Supports multi-currency sales reporting.</li>
+  <li>Optimized for fast loading and smooth performance.</li>
+  <li>Supports inventory planning through sales analysis.</li>
+  <li>Maintains historical sales records for trend analysis.</li>
+</ul>
+
+
+
+      </div>
+
+
+      <!-- Right Side Content Block (Carousel Container) -->
+      <div class="carousel-container">
+        <div class="carousel-track" id="track">
+            <div class="carousel-slide"><img src="sale3.jpeg" alt="Dashboard Slide 1"></div>
+            <div class="carousel-slide"><img src="sale2.jpeg" alt="Dashboard Slide 2"></div>
+            <div class="carousel-slide"><img src="sale1.jpeg" alt="Dashboard Slide 3"></div>
+            <div class="carousel-slide"><img src="4.jpeg" alt="Dashboard Slide 4"></div>
+            <div class="carousel-slide"><img src="5.jpeg" alt="Dashboard Slide 5"></div>
+            <div class="carousel-slide"><img src="6.jpeg" alt="Dashboard Slide 6"></div>
+            <div class="carousel-slide"><img src="7.jpeg" alt="Dashboard Slide 7"></div>
+            <div class="carousel-slide"><img src="8.jpeg" alt="Dashboard Slide 8"></div>
+            <div class="carousel-slide"><img src="9.jpeg" alt="Dashboard Slide 9"></div>
+        </div>
+
+        <button class="nav-btn prev" id="prevBtn">&#10094;</button>
+        <button class="nav-btn next" id="nextBtn">&#10095;</button>
+
+        <div class="carousel-dots" id="dotsContainer">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+      </div>
+      
+    </div>
+
+    <p class="proof-note">Figures shown are direct screenshots from managed accounts and update as eBay re‑evaluates seller status each month.</p>
+  </div>
+</section>
+
+<div class="wrap">
+  <section id="services">
+    <div class="section-head">
+      <div class="eyebrow">What we do</div>
+      <h2>Complete account management, handled by specialists.</h2>
+      <p>Every account under BFA is run by a dedicated team member — not spread thin across a queue.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-cell">
+        <div class="service-num">01</div>
+        <h3>Product research</h3>
+        <p>Winning‑product hunting focused on high‑demand, provably profitable listings.</p>
+      </div>
+      <div class="service-cell">
+        <div class="service-num">02</div>
+        <h3>Listing optimization</h3>
+        <p>SEO‑optimized titles and descriptions built to rank and convert on eBay search.</p>
+      </div>
+      <div class="service-cell">
+        <div class="service-num">03</div>
+        <h3>Inventory management</h3>
+        <p>Stock levels and supplier availability tracked to keep listings live and accurate.</p>
+      </div>
+      <div class="service-cell">
+        <div class="service-num">04</div>
+        <h3>Order processing</h3>
+        <p>Accurate, on‑time fulfilment across both dropshipping and stock‑based orders.</p>
+      </div>
+      <div class="service-cell">
+        <div class="service-num">05</div>
+        <h3>Customer support</h3>
+        <p>Buyer messages and cases handled promptly to protect seller ratings.</p>
+      </div>
+      <div class="service-cell">
+        <div class="service-num">06</div>
+        <h3>Store optimization</h3>
+        <p>Ongoing performance monitoring and adjustments to support long‑term growth.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="models" id="models">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">How we source</div>
+      <h2>Two business models, built around reliable supply.</h2>
+    </div>
+    <div class="models-grid">
+      <div class="model-card accent">
+        <span class="tag">Model 01</span>
+        <h3>Dropshipping</h3>
+        <p>Orders are routed straight to trusted suppliers, keeping overhead low while fulfilment stays fast and reliable.</p>
+        <div class="supplier-list">
+          <span class="supplier-chip">AliExpress</span>
+          <span class="supplier-chip">SHEIN UK</span>
+          <span class="supplier-chip">Go Dropship</span>
+        </div>
+      </div>
+      <div class="model-card">
+        <span class="tag">Model 02</span>
+        <h3>Stock</h3>
+        <p>Products are sourced in bulk for clients who want a sustainable, higher‑margin eBay business built on owned inventory.</p>
+        <div class="supplier-list">
+          <span class="supplier-chip">Alibaba</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <section>
+    <div class="section-head">
+      <div class="eyebrow">Why Bright Future Agency</div>
+      <h2>Built for long‑term account health, not quick spikes.</h2>
+    </div>
+    <div class="highlights-grid">
+      <div class="highlight-item">
+        <span class="check">✓</span>
+        <p><strong>25+ active eBay accounts</strong> managed with consistent growth and performance.</p>
+      </div>
+      <div class="highlight-item">
+        <span class="check">✓</span>
+        <p><strong>Dedicated expert team</strong> handling every account professionally from start to finish.</p>
+      </div>
+      <div class="highlight-item">
+        <span class="check">✓</span>
+        <p><strong>Winning product research</strong> to identify high‑demand, profitable products.</p>
+      </div>
+      <div class="highlight-item">
+        <span class="check">✓</span>
+        <p><strong>SEO‑optimized listings</strong> designed to improve visibility and increase sales.</p>
+      </div>
+      <div class="highlight-item">
+        <span class="check">✓</span>
+        <p><strong>Reliable delivery management</strong> through trusted dropshipping and stock suppliers.</p>
+      </div>
+      <div class="highlight-item">
+        <span class="check">✓</span>
+        <p><strong>End‑to‑end management</strong> — inventory, support, monitoring, and growth strategy.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <section id="contact">
+    <div class="contact">
+      <div>
+        <div class="eyebrow" style="color:#7FD9A1;">Get in touch</div>
+        <h2>Let's talk about your eBay store.</h2>
+        <p>Reach out on WhatsApp for the fastest response, or follow along on social for behind‑the‑scenes eBay tips.</p>
+        <a class="whatsapp-btn" href="https://wa.me/923126887195" target="_blank" rel="noopener">
+          WhatsApp: 0312 6887195
+        </a>
+        <a class="email-link" href="mailto:faheemikram666@gmail.com
+">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="16" height="16"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          faheemikram666@gmail.com
+
+        </a>
+      </div>
+      <div class="social-grid">
+        <a class="social-card" href="https://www.facebook.com/faheemikram6" target="_blank" rel="noopener">
+          <svg class="s-icon" viewBox="0 0 24 24" fill="none" stroke="#B9BEC6" stroke-width="1.6"><path d="M14 9h3V6h-3c-1.7 0-3 1.3-3 3v2H9v3h2v6h3v-6h2.6l.4-3H14 winningsz"/></svg>
+          <div class="s-name">Facebook</div>
+          <div class="s-handle">Faheem Ikram</div>
+        </a>
+        <a class="social-card" href="https://www.instagram.com/femi_ikram/" target="_blank" rel="noopener">
+          <svg class="s-icon" viewBox="0 0 24 24" fill="none" stroke="#B9BEC6" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+          <div class="s-name">Instagram</div>
+          <div class="s-handle">@femi_ikram</div>
+        </a>
+        <a class="social-card" href="https://www.tiktok.com/@faheem_ikram" target="_blank" rel="noopener">
+          <svg class="s-icon" viewBox="0 0 24 24" fill="none" stroke="#B9BEC6" stroke-width="1.6"><path d="M14 4v9.5a3.5 3.5 0 1 1-3-3.46"/><path d="M14 4c0 2.5 2 4.5 4.5 4.5"/></svg>
+          <div class="s-name">TikTok</div>
+          <div class="s-handle">@faheem_ikram</div>
+        </a>
+        <a class="social-card" href="https://youtube.com/@learningebay" target="_blank" rel="noopener">
+          <svg class="s-icon" viewBox="0 0 24 24" fill="none" stroke="#B9BEC6" stroke-width="1.6"><rect x="3" y="6" width="18" height="12" rx="4"/><path d="M11 10l4 2-4 2v-4z" fill="#B9BEC6" stroke="none"/></svg>
+          <div class="s-name">YouTube</div>
+          <div class="s-handle">@learningebay</div>
+        </a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    Bright Future Agency (BFA) — eBay account management &amp; growth. &copy; <span id="year"></span>
+    &nbsp;·&nbsp; <a href="mailto:faheemikram666@gmail.com
+" style="text-decoration:underline;">faheemikram666@gmail.com
+</a>
+  </div>
+</footer>
+
+<script>
+    const track = document.getElementById('track');
+    const slides = document.querySelectorAll('.carousel-slide');
+    const dots = document.querySelectorAll('.dot');
+    
+    let currentIndex = 0;
+    const totalSlides = slides.length;
+    const slideInterval = 4000; 
+    let autoSlideTimer;
+
+    function updateCarousel() {
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+        dots.forEach(dot => dot.classList.remove('active'));
+        if (dots[currentIndex]) {
+            dots[currentIndex].classList.add('active');
+        }
+    }
+
+    function moveSlide(direction) {
+        currentIndex += direction;
+        if (currentIndex >= totalSlides) {
+            currentIndex = 0;
+        } else if (currentIndex < 0) {
+            currentIndex = totalSlides - 1;
+        }
+        updateCarousel();
+        resetTimer(); 
+    }
+
+    function currentSlide(index) {
+        currentIndex = index;
+        updateCarousel();
+        resetTimer();
+    }
+
+    document.getElementById('prevBtn').addEventListener('click', () => moveSlide(-1));
+    document.getElementById('nextBtn').addEventListener('click', () => moveSlide(1));
+    
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => currentSlide(index));
+    });
+
+    function startTimer() {
+        autoSlideTimer = setInterval(() => {
+            moveSlide(1);
+        }, slideInterval);
+    }
+
+    function resetTimer() {
+        clearInterval(autoSlideTimer);
+        startTimer();
+    }
+
+    startTimer();
+    document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
